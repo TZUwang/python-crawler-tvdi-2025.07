@@ -57,3 +57,4 @@ if __name__ == '__main__':
         parsed_sites = [s for s in parsed_sites if s.county == args.county]
     for site in parsed_sites:
         print(f"站點名稱: {site.sitename}, 所在縣市: {site.county}, AQI: {site.aqi}, 緯度:{site.latitude}, 經度:{site.longitude}, 主要污染物: {site.pollutant}")
+        print("=" * 110)
