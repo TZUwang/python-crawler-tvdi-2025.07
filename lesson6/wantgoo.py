@@ -1,6 +1,7 @@
 #自訂的module 是用來爬取Wantgoo網站上的股票資訊
 
 
+import twstock
 import json
 from crawl4ai import (AsyncWebCrawler,
                       BrowserConfig,
@@ -117,3 +118,25 @@ async def get_stock_data(urls)-> list[dict]:
         all_results.append(stack_data[0])
 
     return all_results
+
+
+def get_stocks_with_twstock()->list[dict]:
+    # 取得所有股票清單
+    stocks = twstock.codes
+    
+    stock_list = []
+    for code, info in stocks.items():
+        stock_list.append({
+            'code': code,
+            'name': info.name,
+            'market': info.market,
+            'group': info.group
+        })
+
+    return_list = []
+    
+    for item in stock_list:
+        # 只找尋股票代碼第1位數為2的股票,只要4個字元
+        if item['code'].startswith('2') and len(item['code']) == 4:
+            return_list.append(item)
+    return return_list

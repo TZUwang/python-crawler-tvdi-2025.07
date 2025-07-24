@@ -1,4 +1,4 @@
-#主要執行檔
+#多視窗爬蟲主要執行檔
 
 import asyncio 
 import wantgoo #引入自訂的module
@@ -21,4 +21,4 @@ def main():
         print(stock)
 
 if __name__ == "__main__": 
-    main() 
+    print(wantgoo.get_stocks_with_twstock()) #列印twstock的股票資訊
