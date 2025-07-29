@@ -54,25 +54,44 @@ class SimpleApp:
         self.stock_listbox.pack(side=tk.LEFT)
         self.scrollbar.config(command=self.stock_listbox.yview)
 
-        #左下方建立一個取消按鈕 此按鈕的功能是取消self.stock_listbox的選取
-        cancel_button = tk.Button(root_left_frame, text="取消選取", command = self.clear_selection)
-        cancel_button.pack(side=tk.BOTTOM, pady=10)
+        # 左下方按鈕區
+        left_button_frame = tk.Frame(root_left_frame)
+        left_button_frame.pack(side=tk.BOTTOM, pady=10, fill=tk.X, padx=5)
+
+        # 確認選取按鈕
+        confirm_button = tk.Button(left_button_frame, text="確認", command=self.show_selection)
+        confirm_button.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 5))
+
+        # 取消選取按鈕
+        cancel_button = tk.Button(left_button_frame, text="取消", command = self.clear_selection)
+        cancel_button.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(5, 0))
 
         # 建立root_rightFrame來包含選取股票的資訊
         root_right_frame = tk.Frame(self.root) 
         root_right_frame.pack(side=tk.RIGHT, pady=10,padx=10,fill=tk.BOTH, expand=True)
 
         # 增加right_frame內的內容
-        right_title = tk.Label(root_right_frame, text="選取的股票", font=("Arial"), anchor="w", justify="left")
+        right_title = tk.Label(root_right_frame, text="已選取的股票", font=("Arial"), anchor="w", justify="left")
         right_title.pack(pady=(10,0), fill=tk.X,padx=10)
 
         self.selected_stock_listbox = tk.Listbox(root_right_frame, width=30, height=20) 
         self.selected_stock_listbox.pack(pady=10, padx=10, fill=tk.BOTH, expand=True) 
 
+    #用來顯示選取的股票
+    def show_selection(self):
+        # 先清空右邊的列表
+        self.selected_stock_listbox.delete(0, tk.END)
+        # 取得所有選取項目的索引
+        selected_indices = self.stock_listbox.curselection()
+        # 將選取的項目插入右邊的列表
+        for i in selected_indices:
+            self.selected_stock_listbox.insert(tk.END, self.stock_listbox.get(i))
+
     #用來清除self.stock_listbox的選取
     def clear_selection(self):
         self.stock_listbox.selection_clear(0, tk.END)
-
+        # 同時清空右邊的列表
+        self.selected_stock_listbox.delete(0, tk.END)
 
 
 
